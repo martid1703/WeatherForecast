@@ -1,0 +1,58 @@
+@model WeatherForecastMvc.Models.DayForecastDTO
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+
+<body>
+    <div>
+        <h4>Day Forecast</h4>
+        <hr />
+    </div>
+    <div class="row">
+        <div>
+            <div id="date-label">
+                <label asp-for="Date" class="control-label">@Model.Date.ToShortDateString()</label>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <table class="table" id="tempTable">
+                <thead>
+                    <tr>
+                        <th>Time, h</th>
+                        <th><label asp-for="Temp" class="control-label"></label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < 24; i++)
+                    {
+                        <tr>
+                            <td>
+                                @i.ToString("00")
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <label asp-for="Temp" class="form-control">@Model.Temp[i]</label>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+            <a asp-action="Index">Back to List</a>
+        </div>
+</body>
+
+</html>

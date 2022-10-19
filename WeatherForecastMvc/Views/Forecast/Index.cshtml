@@ -1,0 +1,70 @@
+@model IndexForecastDTO
+@using System.Text.Json;
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+
+<body>
+    <div>
+        <label>Selected date: </label>
+        <input id="calendar" type="date" class="button" min="2000-01-01" max="2030-01-01" size="10" onchange='UpdateForecast("calendar")'/>
+        <input id="forecastCreate" type="button" class="button" value="Create forecast"
+            onclick="GetNewForecastView('calendar')" />
+        <input type="button" class="button" value="Show next hottest day"
+            onclick="ShowNextHottestDay('calendar', @JsonSerializer.Serialize(@Model.Forecast), 'tempTableBody')" />
+    </div>
+    <div id="hottestDayArea"></div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th>
+                    Average temp, &deg;C
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody id="tempTableBody">
+            @foreach (var item in Model.Forecast)
+            {
+                <tr>
+                    <td id="dateId">
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AvgTemp)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id=item.Id}) |
+                        @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/index.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        var date = new Date('@Model.Date.ToString("yyyy-MM-dd")');
+        SetCalendarValue("calendar", date);
+    </script>
+</body>
+
+</html>

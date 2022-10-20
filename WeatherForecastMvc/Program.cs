@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using WeatherForecastMvc.HostedServices;
-using Microsoft.Extensions.Logging;
 
 internal class Program
 {
@@ -9,6 +8,11 @@ internal class Program
         var builder = WebApplication.CreateBuilder(args);
 
         string path = Path.Combine(Directory.GetCurrentDirectory(), "app_data");
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
+
         var connString = builder.Configuration.GetConnectionString("ForecastContext").Replace("|DataDirectory|", path);
 
         var dbContext = builder.Services.AddDbContext<ForecastContext>(options =>

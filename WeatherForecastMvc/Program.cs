@@ -16,7 +16,11 @@ internal class Program
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
-        builder.Services.AddHostedService<TimedService>();
+
+        //builder.Services.AddHostedService<TimedService>();
+        builder.Services.AddHostedService<HostedService>(); //either this or Timed svc
+        builder.Services.AddScoped<ForecastCleanuperService>();
+
         builder.Services.AddLogging(loggingBuilder =>
         {
             var loggingSection = builder.Configuration.GetSection("Logging");

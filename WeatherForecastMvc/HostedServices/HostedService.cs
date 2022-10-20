@@ -3,13 +3,14 @@ namespace WeatherForecastMvc.HostedServices
     public class HostedService : BackgroundService
     {
         public IServiceProvider Services { get; }
-
         private readonly ILogger<HostedService> _logger;
+        private readonly IConfiguration Configuration;
 
-        public HostedService(ILogger<HostedService> logger, IServiceProvider services)
+        public HostedService(ILogger<HostedService> logger, IServiceProvider services, IConfiguration configuration)
         {
             _logger = logger;
             Services = services;
+            Configuration = configuration;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -25,8 +26,12 @@ namespace WeatherForecastMvc.HostedServices
 
             using (var scope = Services.CreateScope())
             {
-                var scopedProcessingService = scope.ServiceProvider.GetRequiredService<IForecastCleanuperService>();
-                await scopedProcessingService.DoWork(stoppingToken);
+                var scopedProcessingService = scope.ServiceProvider.GetRequiredService<ForecastCleanuperService>();
+                if (!uint.TryParse(Configuration["WeatherForecastMvcConfig:CleanupPeriodSec"], out var cleanupPeriodSec))
+                {
+                    cleanupPeriodSec = 60;
+                }
+                await scopedProcessingService.CleanupPeriodically(cleanupPeriodSec, stoppingToken);
             }
         }
 

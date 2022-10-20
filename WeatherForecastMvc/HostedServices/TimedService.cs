@@ -2,17 +2,18 @@ namespace WeatherForecastMvc.HostedServices
 {
     public class TimedService : IHostedService, IDisposable
     {
+        public IServiceProvider Services { get; }
         private readonly ILogger<TimedService> _logger;
         private Timer? _timer = null;
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly IConfiguration Configuration;
 
-
-        public TimedService(ILogger<TimedService> logger, IServiceScopeFactory scopeFactory, IConfiguration configuration)
+        public TimedService(ILogger<TimedService> logger, IServiceScopeFactory scopeFactory, IConfiguration configuration, IServiceProvider services)
         {
             _logger = logger;
             _scopeFactory = scopeFactory;
             Configuration = configuration;
+            Services = services;
         }
 
         public Task StartAsync(CancellationToken stoppingToken)
@@ -23,33 +24,17 @@ namespace WeatherForecastMvc.HostedServices
             {
                 cleanupPeriodSec = 60;
             }
+
             _timer = new Timer(CleanupOldRecords, null, TimeSpan.Zero, TimeSpan.FromSeconds(cleanupPeriodSec));
             return Task.CompletedTask;
         }
 
         private void CleanupOldRecords(object? state)
         {
-            _logger.LogInformation("Cleaning up old records.");
-
             using (var scope = _scopeFactory.CreateScope())
             {
-                var context = scope.ServiceProvider.GetRequiredService<ForecastContext>();
-
-                if (!uint.TryParse(Configuration["WeatherForecastMvcConfig:OldRecordsCleanupDays"], out var oldRecordsCleanupDays))
-                {
-                    oldRecordsCleanupDays = 10;
-                }
-
-                var oldRecords = context.DayForecast.Where(f => f.Date < DateTime.Today.AddDays(-oldRecordsCleanupDays)).ToArray();
-                if (!oldRecords.Any())
-                {
-                    return;
-                }
-
-                string dates = String.Join(',', oldRecords.Select(r => r.Date));
-                _logger.LogInformation($"Removing records for dates:{dates}");
-                context.DayForecast.RemoveRange(oldRecords);
-                context.SaveChanges();
+                var scopedProcessingService = scope.ServiceProvider.GetRequiredService<ForecastCleanuperService>();
+                scopedProcessingService.CleanupOnce();
             }
         }
 

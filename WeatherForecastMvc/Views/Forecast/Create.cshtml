@@ -50,7 +50,7 @@
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                        <input id="tempId" asp-for="Temp" class="form-control" type="number" value=0 />
+                                        <input id="tempId" asp-for="Temp" class="form-control" type="number" min="-60" max="60" value=0 />
                                         <span asp-validation-for="Temp" class="text-danger"></span>
                                     </div>
                                 </td>

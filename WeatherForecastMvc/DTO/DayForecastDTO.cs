@@ -14,6 +14,7 @@ namespace WeatherForecastMvc.Models
 
         [BindProperty]
         [DisplayName("Temperature, C\u00ba")]
+        [DataType(DataType.Currency, ErrorMessage = "Must be a Decimal")]
         public float[] Temp { get; set; }
 
         public double AvgTemp

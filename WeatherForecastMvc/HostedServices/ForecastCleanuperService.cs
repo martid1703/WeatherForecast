@@ -6,7 +6,6 @@ internal interface IForecastCleanuperService
 
 internal class ForecastCleanuperService : IForecastCleanuperService
 {
-    private int executionCount = 0;
     private readonly ILogger _logger;
     private readonly ForecastContext _context;
     private readonly IConfiguration Configuration;
@@ -22,8 +21,6 @@ internal class ForecastCleanuperService : IForecastCleanuperService
     {
         while (!stoppingToken.IsCancellationRequested)
         {
-            executionCount++;
-            _logger.LogInformation("ForecastCleanuperService is working. Count: {Count}", executionCount);
             CleanupOldRecords();
             await Task.Delay(TimeSpan.FromSeconds(cleanupPeriodSec), stoppingToken);
         }

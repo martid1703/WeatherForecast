@@ -1,0 +1,9 @@
+2022-10-20T11:41:31.6521940+04:00	INFO	[WeatherForecastMvc.HostedServices.TimedService]	[0]	Timed Hosted Service running.
+2022-10-20T11:41:31.6574384+04:00	INFO	[WeatherForecastMvc.HostedServices.TimedService]	[0]	Cleaning up old records.
+2022-10-20T11:41:31.6926966+04:00	WARN	[Microsoft.AspNetCore.Server.Kestrel]	[0]	Overriding address(es) 'https://localhost:7200, http://localhost:5165'. Binding to endpoints defined via IConfiguration and/or UseKestrel() instead.
+2022-10-20T11:41:31.7172856+04:00	INFO	[Microsoft.Hosting.Lifetime]	[ListeningOnAddress]	Now listening on: http://localhost:5165
+2022-10-20T11:41:31.7173095+04:00	INFO	[Microsoft.Hosting.Lifetime]	[ListeningOnAddress]	Now listening on: https://localhost:7200
+2022-10-20T11:41:31.7173790+04:00	INFO	[Microsoft.Hosting.Lifetime]	[0]	Application started. Press Ctrl+C to shut down.
+2022-10-20T11:41:31.7173942+04:00	INFO	[Microsoft.Hosting.Lifetime]	[0]	Hosting environment: Development
+2022-10-20T11:41:31.7174075+04:00	INFO	[Microsoft.Hosting.Lifetime]	[0]	Content root path: D:\Progs\Tutorials\WeatherForecast\WeatherForecastMvc\
+2022-10-20T11:41:34.5556424+04:00	INFO	[WeatherForecastMvc.Controllers.ForecastController]	[0]	Getting index view.

@@ -152,7 +152,7 @@ namespace WeatherForecastMvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(DayForecastCreateDTO dayForecast)
         {
-            _logger.LogInformation($"Creating forecast for date: {dayForecast.Date}.");
+            _logger.LogInformation($"Creating forecast for date: {dayForecast.Date.ToShortDateString()}.");
 
             var forecast = dayForecast.Convert();
             if (ModelState.IsValid)

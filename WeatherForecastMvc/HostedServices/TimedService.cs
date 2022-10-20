@@ -39,7 +39,13 @@ namespace WeatherForecastMvc.HostedServices
                 {
                     oldRecordsCleanupDays = 10;
                 }
+
                 var oldRecords = context.DayForecast.Where(f => f.Date < DateTime.Today.AddDays(-oldRecordsCleanupDays)).ToArray();
+                if (!oldRecords.Any())
+                {
+                    return;
+                }
+
                 string dates = String.Join(',', oldRecords.Select(r => r.Date));
                 _logger.LogInformation($"Removing records for dates:{dates}");
                 context.DayForecast.RemoveRange(oldRecords);

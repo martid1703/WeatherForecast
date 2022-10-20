@@ -80,16 +80,16 @@ namespace WeatherForecastMvc.Controllers
             return date;
         }
 
-        private async Task<ViewResult> CreateIndexView(DateTime from)
+        private async Task<ViewResult> CreateIndexView(DateTime date)
         {
-            _logger.LogInformation("Getting index view.");
+            _logger.LogInformation($"Getting index view from {date.ToShortDateString()}.");
 
             var forecast = await _context.DayForecast
-            .Where(f => f.Date >= from.Date && f.Date <= from.AddDays(_displayForecastDays).Date)
+            .Where(f => f.Date >= date.Date && f.Date <= date.AddDays(_displayForecastDays).Date)
             .OrderBy(f => f.Date)
             .ToListAsync();
 
-            var indexForecast = new IndexForecastDTO(from, _displayForecastDays, forecast.Select(f => f.Convert()).ToArray());
+            var indexForecast = new IndexForecastDTO(date, _displayForecastDays, forecast.Select(f => f.Convert()).ToArray());
             return View("Index", indexForecast);
         }
 
@@ -152,11 +152,11 @@ namespace WeatherForecastMvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(DayForecastCreateDTO dayForecast)
         {
-            _logger.LogInformation($"Creating forecast for date: {dayForecast.Date.ToShortDateString()}.");
-
             var forecast = dayForecast.Convert();
             if (ModelState.IsValid)
             {
+                _logger.LogInformation($"Creating forecast for date: {dayForecast.Date.ToShortDateString()}.");
+
                 _context.Add(forecast);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(IndexWithDate), dayForecast.Date);
@@ -197,6 +197,8 @@ namespace WeatherForecastMvc.Controllers
             {
                 try
                 {
+                    _logger.LogWarning($"Edit forecast for {dayForecast.Date.ToShortDateString()}.");
+
                     _context.Update(forecast);
                     await _context.SaveChangesAsync();
                 }
@@ -220,7 +222,6 @@ namespace WeatherForecastMvc.Controllers
         //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Guid id)
         {
-            _logger.LogInformation($"Deleting forecast with id: {id}.");
 
             if (_context.DayForecast == null)
             {
@@ -229,6 +230,7 @@ namespace WeatherForecastMvc.Controllers
             var dayForecast = await _context.DayForecast.FindAsync(id);
             if (dayForecast != null)
             {
+                _logger.LogWarning($"Deleting forecast for {dayForecast.Date.ToShortDateString()}.");
                 _context.DayForecast.Remove(dayForecast);
             }
 

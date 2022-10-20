@@ -40,3 +40,5 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
+
+**/*.log

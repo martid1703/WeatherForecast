@@ -7,3 +7,12 @@
 2022-10-20T11:41:31.7173942+04:00	INFO	[Microsoft.Hosting.Lifetime]	[0]	Hosting environment: Development
 2022-10-20T11:41:31.7174075+04:00	INFO	[Microsoft.Hosting.Lifetime]	[0]	Content root path: D:\Progs\Tutorials\WeatherForecast\WeatherForecastMvc\
 2022-10-20T11:41:34.5556424+04:00	INFO	[WeatherForecastMvc.Controllers.ForecastController]	[0]	Getting index view.
+2022-10-20T11:41:56.1804536+04:00	INFO	[WeatherForecastMvc.Controllers.ForecastController]	[0]	Getting index view.
+2022-10-20T11:41:58.6942938+04:00	INFO	[WeatherForecastMvc.Controllers.ForecastController]	[0]	Getting index view.
+2022-10-20T11:42:03.2503458+04:00	INFO	[WeatherForecastMvc.Controllers.ForecastController]	[0]	Creating forecast for date: 25.10.2022.
+2022-10-20T11:42:03.4091850+04:00	INFO	[WeatherForecastMvc.Controllers.ForecastController]	[0]	Getting index view.
+2022-10-20T11:42:14.3407114+04:00	INFO	[WeatherForecastMvc.Controllers.ForecastController]	[0]	Deleting forecast with id: 1a8d413b-1e22-4ccc-5371-08dab26e946c.
+2022-10-20T11:42:14.4059094+04:00	INFO	[WeatherForecastMvc.Controllers.ForecastController]	[0]	Getting index view.
+2022-10-20T11:42:31.6619005+04:00	INFO	[WeatherForecastMvc.HostedServices.TimedService]	[0]	Cleaning up old records.
+2022-10-20T11:43:31.6543677+04:00	INFO	[WeatherForecastMvc.HostedServices.TimedService]	[0]	Cleaning up old records.
+2022-10-20T11:44:31.6555694+04:00	INFO	[WeatherForecastMvc.HostedServices.TimedService]	[0]	Cleaning up old records.
